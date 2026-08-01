@@ -3,16 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "cd client && npm run build",
+    "build": "npm --prefix client install && npm --prefix client run build",
     "start:server": "cd server && npm start",
-    "devserver": "cd server && npm run dev",
-    "devclient": "cd client && npm run dev",
-    "seed:supabase": "cd server && node seeds/seed.js",
-    "vercel": "npx vercel",
-    "supabase": "npx supabase"
-  },
-  "devDependencies": {
-    "supabase": "^2.15.8",
-    "vercel": "^41.2.1"
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "seed:supabase": "cd server && node seeds/seed.js"
   }
 }
