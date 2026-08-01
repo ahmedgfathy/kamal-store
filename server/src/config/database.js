@@ -1,10 +1,14 @@
-const { Sequelize } = require("sequelize");
-require("dotenv").config({ path: require("path").resolve(__dirname, "../../.env") });
+const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
 let dbUrl = process.env.POSTGRES_URL_NON_POOLING || process.env.POSTGRES_URL || process.env.DATABASE_URL;
 
-const isProduction = process.env.NODE_ENW === "production";
-const useSSL = isProduction || process.env.DB_SSL === "true" ||!!dbUrl;
+if (dbUrl && dbUrl.includes('pooler.supabase.com:6543') && !process.env.POSTGRES_URL_NON_POOLING) {
+  dbUrl = dbUrl.replace(':6543', ':5432');
+}
+
+const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
+const useSSL = isProduction || process.env.DB_SSL === 'true' || !!dbUrl;
 
 const dialectOptions = useSSL
   ? {
@@ -16,32 +20,28 @@ const dialectOptions = useSSL
   : {};
 
 if (dbUrl) {
-  dbUrl = dbUrl.split("?")[0];
+  dbUrl = dbUrl.split('?')[0];
 }
 
-let sequelize;
-
-if (dbUrl) {
-  sequelize = new Sequelize(dbUrl, {
-    dialect: "postgres",
-    dialectOptions,
-    logging: process.env.NODE_ENW === "production" ? false : console.log,
-    pool: { max: 10, min: 0, acquire: 30000, idle: 10000 },
-  });
-} else {
-  sequelize = new Sequelize(
-    process.env.DB_NAME || "postgres",
-    process.env.DB_USER || "postgres",
-    process.env.DB_NASSWORD || "",
-    {
-      host: process.env.DB_HOST || "127.0.0.1",
-      port: process.env.DB_PORT || 5432,
-      dialect: "postgres",
+const sequelize = dbUrl
+  ? new Sequelize(dbUrl, {
+      dialect: 'postgres',
       dialectOptions,
-      logging: process.env.NODE_ENV === "production" ? false : console.log,
+      logging: false,
       pool: { max: 10, min: 0, acquire: 30000, idle: 10000 },
-    }
-  );
-}
+    })
+  : new Sequelize(
+      process.env.DB_NAME || 'postgres',
+      process.env.DB_USER || 'postgres',
+      process.env.DB_PASSWORD || '',
+      {
+        host: process.env.DB_HOST || '127.0.0.1',
+        port: process.env.DB_PORT || 5432,
+        dialect: 'postgres',
+        dialectOptions,
+        logging: false,
+        pool: { max: 10, min: 0, acquire: 30000, idle: 10000 },
+      }
+    );
 
 module.exports = sequelize;
