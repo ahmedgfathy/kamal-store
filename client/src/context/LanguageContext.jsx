@@ -4,20 +4,22 @@ import { translations, translate } from "../i18n/translations";
 const LanguageContext = createContext(null);
 
 export function LanguageProvider({ children }) {
-  const [lang, setLang] = useState(() => localStorage.getItem("aurum-lang") || "en");
+  const [lang, setLang] = useState(() => localStorage.getItem("kw-lang") || "ar");
 
   useEffect(() => {
-    localStorage.setItem("aurum-lang", lang);
+    localStorage.setItem("kw-lang", lang);
     const root = document.documentElement;
     root.lang = lang;
     root.dir = lang === "ar" ? "rtl" : "ltr";
     const body = document.body;
     if (lang === "ar") {
-      body.style.setProperty("--font-heading", '"Cairo", "Poppins", sans-serif');
-      body.style.setProperty("--font-body", '"Cairo", "Inter", sans-serif');
+      body.style.setProperty("--font-heading", '"Cairo", "Roboto", sans-serif');
+      body.style.setProperty("--font-body", '"Cairo", "Roboto", sans-serif');
+      body.style.setProperty("--font-logo-ar", '"Amiri", "Cairo", serif');
     } else {
-      body.style.removeProperty("--font-heading");
-      body.style.removeProperty("--font-body");
+      body.style.setProperty("--font-heading", '"Roboto", "Cairo", sans-serif');
+      body.style.setProperty("--font-body", '"Roboto", "Cairo", sans-serif');
+      body.style.removeProperty("--font-logo-ar");
     }
   }, [lang]);
 

@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { useLanguage } from "../context/LanguageContext";
 import { useState } from "react";
+import Logo from "./Logo";
 export default function Navbar() {
   const { user, logout } = useAuth();
   const { items } = useCart();
@@ -12,10 +13,10 @@ export default function Navbar() {
   const [search, setSearch] = useState("");
   const handleSearch = (e) => { e.preventDefault(); if (search.trim()) navigate("/products?search=" + encodeURIComponent(search)); };
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
+    <nav className="bg-cream/95 backdrop-blur border-b border-line sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="font-cairo text-2xl font-bold text-primary">AURUM &amp; CO.</Link>
+        <div className="flex items-center justify-between h-20">
+          <Logo />
           <form onSubmit={handleSearch} className="hidden md:flex items-center bg-warm rounded-full px-4 py-2 w-80">
             <span className="material-symbols-outlined text-brown mr-2 rtl:ml-2 rtl:mr-0">search</span>
             <input type="text" placeholder={t("nav.searchPlaceholder")} value={search} onChange={(e) => setSearch(e.target.value)} className="bg-transparent outline-none w-full text-sm" />
@@ -27,7 +28,7 @@ export default function Navbar() {
               {user.role === "admin" && <Link to="/admin" className="hover:text-accent transition">{t("nav.admin")}</Link>}
               <Link to="/cart" className="relative">
                 <span className="material-symbols-outlined">shopping_cart</span>
-                {items.length > 0 && <span className="absolute -top-2 -right-2 rtl:-right-auto rtl:-left-2 bg-secondary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{items.length}</span>}
+                {items.length > 0 && <span className="absolute -top-2 -right-2 rtl:-right-auto rtl:-left-2 bg-primary text-gold text-xs rounded-full w-5 h-5 flex items-center justify-center">{items.length}</span>}
               </Link>
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-sand rounded-full flex items-center justify-center text-sm font-bold text-primary">{user.firstName?.[0]}</div>
@@ -37,12 +38,12 @@ export default function Navbar() {
               <Link to="/login" className="hover:text-accent transition">{t("nav.login")}</Link>
               <Link to="/register" className="bg-primary text-white px-4 py-2 rounded-full hover:bg-accent transition">{t("nav.register")}</Link>
             </>)}
-            <button onClick={toggle} className="px-3 py-1.5 rounded-full border border-primary text-primary text-sm font-semibold hover:bg-primary hover:text-white transition">
+            <button onClick={toggle} className="px-3 py-1.5 rounded-full border border-secondary text-secondary text-sm font-semibold hover:bg-secondary hover:text-cream transition">
               {lang === "en" ? "عربي" : "EN"}
             </button>
           </div>
           <div className="flex items-center gap-3 md:hidden">
-            <button onClick={toggle} className="px-3 py-1.5 rounded-full border border-primary text-primary text-sm font-semibold hover:bg-primary hover:text-white transition">
+            <button onClick={toggle} className="px-3 py-1.5 rounded-full border border-secondary text-secondary text-sm font-semibold hover:bg-secondary hover:text-cream transition">
               {lang === "en" ? "عربي" : "EN"}
             </button>
             <button onClick={() => setMenuOpen(!menuOpen)}>

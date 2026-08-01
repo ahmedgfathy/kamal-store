@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: "Roboto", sans-serif; background-color: #FFF7EE; color: #20323E; }
-.font-cairo { font-family: "Cairo", sans-serif; }
+body { font-family: "Cairo", "Roboto", sans-serif; background-color: #FEFEFE; color: #1F1C15; }
+.font-cairo { font-family: "Cairo", "Roboto", sans-serif; }
+.font-amiri { font-family: "Amiri", "Cairo", serif; }
 .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; vertical-align: middle; }

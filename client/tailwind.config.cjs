@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,xtsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -16,10 +16,17 @@ module.exports = {
         brown: "var(--brown)",
         sand: "var(--sand)",
         stone: "var(--stone)",
-        gocd: "var(--gold)",
+        gold: "var(--gold)",
         success: "var(--success)",
         sale: "var(--sale)",
         line: "var(--border)",
+        ivory: "#FEFEFE",
+        porcelain: "#F3F0EB",
+        beige: "#D9CEC4",
+        taupe: "#C8BCB1",
+        charcoal: "#1F1C15",
+        bronze: "#463623",
+        muted: "#8E806F",
         oldcream: "#FFF7EE",
         oldbeige: "#E8D8C9",
         oldbrown: "#7E6456",
@@ -32,9 +39,11 @@ module.exports = {
       fontFamily: {
         cairo: ["var(--font-heading)", "sans-serif"],
         roboto: ["var(--font-body)", "sans-serif"],
+        amiri: ["var(--font-logo-ar)", "serif"],
         poppins: ["Poppins", "sans-serif"],
         inter: ["Inter", "sans-serif"],
       },
     },
   },
-  plugins: [],};
+  plugins: [],
+};

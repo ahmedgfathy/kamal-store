@@ -1,76 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aurum &!mp; Co. | Home &&amp; Kitchen Store</title>
+  <title>كمال وحيد | Kamal Waheed — Home &amp; Décor</title>
+  <meta name="description" content="كمال وحيد — جودة تختارها، وأناقة تعيشها. منتجات منزلية ومطبخية فاخرة." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@00;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Cairo:wght@00;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link href="https://fonts.gstatic.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0fdisplay=swap" rel="stylesheet" />
   <style>
     :root {
-      --primary: #274B3C;
-      --secondary: #E6864A;
-      --accent: #BC391B;
-      --cream: #FAF9F6;
-      --warm: #F8EBDF;
-      --sage: #A11A394;
-      --brown: #6B4937;
-      --sand: #CFB8AB;
-      --stone: #978B84;
-      --gold: #C9A86A;
+      --primary: #1F1C15;
+      --secondary: #A86D1F;
+      --accent: #463623;
+      --cream: #FEFEFE;
+      --warm: #F3F0EB;
+      --sage: #D9CEC4;
+      --brown: #1F1C15;
+      --sand: #C8BCB1;
+      --stone: #8E806F;
+      --gold: #A86D1F;
       --success: #4F7A52;
-      --sale: #D3542F;
-      --border: #E9E0DE;
-      --font-heading: "Poppins", "Cairo", sans-serif;
-      --font-body: "Inter", "Cairo", sans-serif;
+      --sale: #B0562F;
+      --border: #D9CEC4;
+      --font-heading: "Cairo", "Roboto", sans-serif;
+      --font-body: "Cairo", "Roboto", sans-serif;
+      --font-logo-ar: "Amiri", "Cairo", serif;
     }
-    body.old-theme {
-      --primary: #20323E;
-      --secondary: #6A93A8;
-      --accent: #7E6456;
-      --cream: #FFF7EE;
-      --warm: #F2EADB;
-      --sage: #B0C8D6;
-      --brown: #7E6456;
-      --sand: #CDBCA6;
-      --stone: #978B84;
-      --gold: #C9A86A;
-      --success: #4F7A52;
-      --sale: #D3542F;
-      --border: #E8D8C9;
-      --font-heading: "Cairo", sans-serif;
-      --font-body: "Roboto", "Cairo", sans-serif;
-    }
-    .hero-bg { background: linear-gradient(135deg, #FAF9F6 0%, #F8EBDF 50%, #CFB8AB 100%); }
+    .hero-bg { background: linear-gradient(135deg, #FEFEFE 0%, #F3F0EB 50%, #D9CEC4 100%); }
     .hero-img { background: url("https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=80") center/cover no-repeat; }
     .cat-card:hover img { transform: scale(1.08); }
     .product-img:hover { transform: scale(1.05); }
     .marquee { animation: marquee 25s linear infinite; }
     @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .card-shadow { box-shadow: 0 12px 30px rgba(31, 28, 21, 0.14); }
+    .card-shadow-soft { box-shadow: 0 4px 16px rgba(31, 28, 21, 0.08); }
+    .gold-divider { height: 1px; background: #A86D1F; }
   </style>
 </head>
-<body class="bg-cream font-inter text-brown">
+<body class="bg-cream font-cairo text-brown">
   <div id="root"></div>
-  <button id="theme-toggle" class="fixed bottom-5 right-5 rtl:right-auto rtl:left-5 z-50 w-11 h-11 rounded-full bg-primary text-white shadow-lg flex items-center justify-center hover:bg-accent transition" title="Toggle theme"></button>
-  <script>
-    (function () {
-      if (localStorage.getItem("aurum-theme") === "old") document.body.classList.add("old-theme");
-      var btn = document.getElementById("theme-toggle");
-      function render() {
-        var old = document.body.classList.contains("old-theme");
-        btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:20px">' + (old ? "nightlight" : "brightness_7") + "</span>";
-      btn.title = old ? "Switch to Ziara Home theme" : "Switch to original theme";
-      }
-      btn.addEventListener("click", function () {
-        document.body.classList.toggle("old-theme");
-        localStorage.setItem("aurum-theme", document.body.classList.contains("old-theme") ? "old" : "new");
-        render();
-      });
-      render();
-    })();
-  </script>
   <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
