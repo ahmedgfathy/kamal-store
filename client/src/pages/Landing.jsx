@@ -30,7 +30,7 @@ export default function Landing() {
   const [featured, setFeatured] = useState([]);
   const [slide, setSlide] = useState(0);
 
-  useEffect(() => { api.get("/products/featured").then(r => setFeatured(r.data.products)); }, []);
+  useEffect(() => { api.get("/products/featured").then(r => setFeatured(r.data?.products || [])); }, []);
   useEffect(() => { const t = setInterval(() => setSlide(s => (s + 1) % heroSlides.length), 5000); return () => clearInterval(t); }, []);
 
   const hero = heroSlides[slide];

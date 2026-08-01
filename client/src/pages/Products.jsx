@@ -14,14 +14,14 @@ export default function Products() {
   const category = searchParams.get("category") || "";
   const search = searchParams.get("search") || "";
   const sort = searchParams.get("sort") || "";
-  useEffect(() => { api.get("/products/categories").then(r => setCategories(r.data.categories)); }, []);
+  useEffect(() => { api.get("/products/categories").then(r => setCategories(r.data?.categories || [])); }, []);
   useEffect(() => {
     setLoading(true);
     const params = { page, limit: 12 };
     if (category) params.category = category;
     if (search) params.search = search;
     if (sort) params.sort = sort;
-    api.get("/products", { params }).then(r => { setProducts(r.data.products); setPagination(r.data.pagination); }).finally(() => setLoading(false));
+    api.get("/products", { params }).then(r => { setProducts(r.data?.products || []); setPagination(r.data?.pagination || {}); }).finally(() => setLoading(false));
   }, [page, category, search, sort]);
   const setFilter = (key, value) => { const params = new URLSearchParams(searchParams); if (value) { params.set(key, value); params.set("page", "1"); } else { params.delete(key); } setSearchParams(params); };
   const catName = (c) => (lang === "ar" ? c.nameAr || c.name : c.name);

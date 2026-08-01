@@ -12,11 +12,11 @@ export default function AdminProducts() {
   const [showForm, setShowForm] = useState(false);
   const [categories, setCategories] = useState([]);
   const [form, setForm] = useState({ name: "", nameAr: "", slug: "", description: "", price: "", comparePrice: "", stock: "", categoryId: "", sku: "", isFeatured: false });
-  useEffect(() => { if (user?.role === "admin") { api.get("/products?limit=100").then(r => setProducts(r.data.products)); api.get("/products/categories").then(r => setCategories(r.data.categories)).finally(() => setLoading(false)); } }, [user]);
+  useEffect(() => { if (user?.role === "admin") { api.get("/products?limit=100").then(r => setProducts(r.data?.products || [])); api.get("/products/categories").then(r => setCategories(r.data?.categories || [])).finally(() => setLoading(false)); } }, [user]);
   const update = (k, v) => setForm({ ...form, [k]: v });
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try { await api.post("/products", { ...form, price: parseFloat(form.price), comparePrice: form.comparePrice ? parseFloat(form.comparePrice) : null, stock: parseInt(form.stock || 0) }); toast.success("Product created"); setShowForm(false); setForm({ name: "", nameAr: "", slug: "", description: "", price: "", comparePrice: "", stock: "", categoryId: "", sku: "", isFeatured: false }); api.get("/products?limit=100").then(r => setProducts(r.data.products)); }
+    try { await api.post("/products", { ...form, price: parseFloat(form.price), comparePrice: form.comparePrice ? parseFloat(form.comparePrice) : null, stock: parseInt(form.stock || 0) }); toast.success("Product created"); setShowForm(false); setForm({ name: "", nameAr: "", slug: "", description: "", price: "", comparePrice: "", stock: "", categoryId: "", sku: "", isFeatured: false }); api.get("/products?limit=100").then(r => setProducts(r.data?.products || [])); }
     catch (e) { toast.error(e.response?.data?.message || "Failed"); }
   };
   const deleteProduct = async (id) => {

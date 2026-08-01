@@ -9,7 +9,7 @@ export default function AdminCustomers() {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({});
-  useEffect(() => { if (user?.role === "admin") api.get("/orders/admin/customers").then(r => { setCustomers(r.data.customers); setPagination(r.data.pagination); }).finally(() => setLoading(false)); }, [user]);
+  useEffect(() => { if (user?.role === "admin") api.get("/orders/admin/customers").then(r => { setCustomers(r.data?.customers || []); setPagination(r.data?.pagination || {}); }).finally(() => setLoading(false)); }, [user]);
   if (user?.role !== "admin") return <div className="max-w-4xl mx-auto px-4 py-16 text-center"><p>{t("admin.adminRequired")}</p></div>;
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">

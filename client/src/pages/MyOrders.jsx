@@ -8,7 +8,7 @@ export default function MyOrders() {
   const { lang, t } = useLanguage();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  useEffect(() => { if (user) api.get("/orders").then(r => setOrders(r.data.orders)).finally(() => setLoading(false)); }, [user]);
+  useEffect(() => { if (user) api.get("/orders").then(r => setOrders(r.data?.orders || [])).finally(() => setLoading(false)); }, [user]);
   const statusColor = (s) => ({ pending: "bg-yellow-100 text-yellow-700", confirmed: "bg-blue-100 text-blue-700", processing: "bg-blue-100 text-blue-700", shipped: "bg-purple-100 text-purple-700", out_for_delivery: "bg-indigo-100 text-indigo-700", delivered: "bg-green-100 text-green-700", cancelled: "bg-red-100 text-red-700" }[s] || "bg-gray-100");
   if (!user) return <div className="max-w-4xl mx-auto px-4 py-16 text-center"><p className="text-gray-500">{t("orders.loginToView")}</p><Link to="/login" className="bg-primary text-white px-6 py-2 rounded-full mt-4 inline-block">{t("orders.login")}</Link></div>;
   if (loading) return <div className="flex justify-center py-20"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>;

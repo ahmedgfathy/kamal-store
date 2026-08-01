@@ -11,7 +11,7 @@ export default function AdminOrders() {
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState("");
   useEffect(() => { if (user?.role === "admin") fetchOrders(); }, [user, statusFilter]);
-  const fetchOrders = () => { setLoading(true); const params = {}; if (statusFilter) params.status = statusFilter; api.get("/orders/admin/all", { params }).then(r => setOrders(r.data.orders)).finally(() => setLoading(false)); };
+  const fetchOrders = () => { setLoading(true); const params = {}; if (statusFilter) params.status = statusFilter; api.get("/orders/admin/all", { params }).then(r => setOrders(r.data?.orders || [])).finally(() => setLoading(false)); };
   const updateStatus = async (orderId, status) => {
     try { await api.put("/orders/" + orderId + "/status", { status }); toast.success("Status updated"); fetchOrders(); }
     catch (e) { toast.error("Failed to update"); }
