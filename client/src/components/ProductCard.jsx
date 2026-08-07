@@ -12,7 +12,7 @@ export default function ProductCard({ product }) {
   const discount = product.comparePrice ? Math.round((1 - Number(product.price) / Number(product.comparePrice)) * 100) : 0;
   return <article className="new-product-card">
     <Link to={`/products/${product.slug}`} className="new-product-card__image">
-      <img src={product.images?.[0] || "/placeholder.jpg"} alt={name} />
+      <img src={product.images?.[0] || "/placeholder.svg"} alt={name} />
       {discount > 0 && <span className="new-product-card__sale">-{discount}%</span>}
       <span className="new-product-card__view"><span className="material-symbols-outlined">arrow_back</span></span>
     </Link>

@@ -17,8 +17,8 @@ export function LanguageProvider({ children }) {
       body.style.setProperty("--font-body", '"Cairo", "Roboto", sans-serif');
       body.style.setProperty("--font-logo-ar", '"Amiri", "Cairo", serif');
     } else {
-      body.style.setProperty("--font-heading", '"Roboto", "Cairo", sans-serif');
-      body.style.setProperty("--font-body", '"Roboto", "Cairo", sans-serif');
+      body.style.setProperty("--font-heading", '"Manrope", "Cairo", sans-serif');
+      body.style.setProperty("--font-body", '"Manrope", "Cairo", sans-serif');
       body.style.removeProperty("--font-logo-ar");
     }
   }, [lang]);

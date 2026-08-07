@@ -45,7 +45,7 @@ export default function AdminOrders() {
               {order.items?.map(item => (
                 <div key={item.id} className="flex items-center gap-2 text-sm bg-warm rounded-lg px-3 py-1">
                   <span>{item.productName} x{item.quantity}</span>
-                  <span className="font-semibold">EGP {item.total}</span>
+                  <span className="font-semibold">{t("currency")} {item.total}</span>
                 </div>
               ))}
             </div>

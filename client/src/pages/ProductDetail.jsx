@@ -24,7 +24,7 @@ export default function ProductDetail() {
       <div className="flex flex-col md:flex-row gap-10">
         <div className="flex-1">
           <div className="bg-warm rounded-2xl overflow-hidden aspect-square flex items-center justify-center">
-            <img src={product.images?.[0] || "/placeholder.jpg"} alt={name} className="w-full h-full object-cover" />
+            <img src={product.images?.[0] || "/placeholder.svg"} alt={name} className="w-full h-full object-cover" />
           </div>
         </div>
         <div className="flex-1">

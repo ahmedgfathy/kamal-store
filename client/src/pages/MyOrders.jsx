@@ -25,7 +25,7 @@ export default function MyOrders() {
           <div className="space-y-2 mb-3">
             {order.items?.map(item => (
               <div key={item.id} className="flex items-center gap-3 text-sm">
-                <img src={item.productImage || "/placeholder.jpg"} alt={item.productName} className="w-10 h-10 rounded-lg object-cover" />
+                <img src={item.productImage || "/placeholder.svg"} alt={item.productName} className="w-10 h-10 rounded-lg object-cover" />
                 <span className="flex-1">{item.productName} x{item.quantity}</span>
                 <span className="font-semibold">{t("currency")} {item.total}</span>
               </div>

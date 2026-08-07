@@ -20,7 +20,7 @@ export default function Cart() {
         <div className="flex-1 space-y-4">
           {items.map(item => (
             <div key={item.id} className="bg-white rounded-2xl p-3 sm:p-4 flex gap-3 sm:gap-4 shadow-sm">
-              <img src={item.product?.images?.[0] || "/placeholder.jpg"} alt={itemName(item)} className="w-20 h-24 sm:w-24 sm:h-24 object-cover rounded-xl" />
+              <img src={item.product?.images?.[0] || "/placeholder.svg"} alt={itemName(item)} className="w-20 h-24 sm:w-24 sm:h-24 object-cover rounded-xl" />
               <div className="flex-1">
                 <h3 className="font-cairo font-semibold">{itemName(item)}</h3>
                 <p className="text-primary font-bold mt-1">{t("currency")} {item.product?.price}</p>

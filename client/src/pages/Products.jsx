@@ -23,7 +23,7 @@ export default function Products() {
     if (sort) params.sort = sort;
     api.get("/products", { params }).then(r => { setProducts(r.data?.products || []); setPagination(r.data?.pagination || {}); }).finally(() => setLoading(false));
   }, [page, category, search, sort]);
-  const setFilter = (key, value) => { const params = new URLSearchParams(searchParams); if (value) { params.set(key, value); params.set("page", "1"); } else { params.delete(key); } setSearchParams(params); };
+  const setFilter = (key, value) => { const params = new URLSearchParams(searchParams); if (value) { params.set(key, value); if (key !== "page") params.set("page", "1"); } else { params.delete(key); if (key !== "page") params.set("page", "1"); } setSearchParams(params); };
   const catName = (c) => (lang === "ar" ? c.nameAr || c.name : c.name);
   return (
     <div className="max-w-7xl mx-auto px-4 py-6 sm:py-10">

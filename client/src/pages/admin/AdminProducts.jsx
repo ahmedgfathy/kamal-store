@@ -53,7 +53,7 @@ export default function AdminProducts() {
           <tbody>
             {products.map(p => (
               <tr key={p.id} className="border-b hover:bg-warm">
-                <td className="p-4"><div className="flex items-center gap-3"><img src={p.images?.[0] || "/placeholder.jpg"} className="w-10 h-10 rounded-lg object-cover" /><span className="font-semibold">{lang === "ar" && p.nameAr ? p.nameAr : p.name}</span></div></td>
+                <td className="p-4"><div className="flex items-center gap-3"><img src={p.images?.[0] || "/placeholder.svg"} className="w-10 h-10 rounded-lg object-cover" /><span className="font-semibold">{lang === "ar" && p.nameAr ? p.nameAr : p.name}</span></div></td>
                 <td className="p-4">{t("currency")} {p.price}</td>
                 <td className="p-4">{p.stock}</td>
                 <td className="p-4">{p.category ? (lang === "ar" ? p.category.nameAr || p.category.name : p.category.name) : "-"}</td>

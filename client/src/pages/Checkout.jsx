@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../utils/api";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
@@ -40,7 +40,7 @@ export default function Checkout() {
         <div className="flex-1 space-y-6">
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <h3 className="font-cairo font-bold text-lg mb-4">{t("checkout.shippingAddress")}</h3>
-            {addresses.length === 0 ? <p className="text-gray-500 text-sm">{t("checkout.noAddresses")}</p>
+            {addresses.length === 0 ? <p className="text-gray-500 text-sm">{t("checkout.noAddresses")} <Link to="/profile" className="text-primary font-semibold hover:underline">{t("profile.addAddress")}</Link></p>
             : addresses.map(addr => (
               <label key={addr.id} className={"block border-2 rounded-xl p-4 mb-3 cursor-pointer transition " + (selectedAddress === addr.id ? "border-primary bg-warm" : "border-gray-100 hover:border-gray-200")}>
                 <input type="radio" name="address" value={addr.id} checked={selectedAddress === addr.id} onChange={() => setSelectedAddress(addr.id)} className="hidden" />

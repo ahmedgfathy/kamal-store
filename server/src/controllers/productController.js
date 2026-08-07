@@ -6,7 +6,11 @@ exports.getProducts = async (req, res) => {
     const { page = 1, limit = 12, category, search, sort, minPrice, maxPrice } = req.query;
     const offset = (page - 1) * limit;
     const where = { isActive: true };
-    if (category) where.categoryId = category;
+    if (category) {
+      const cat = await Category.findOne({ where: { [Op.or]: [{ id: category }, { slug: category }] }, attributes: ["id"] });
+      if (!cat) return res.json({ products: [], pagination: { total: 0, page: parseInt(page), pages: 0 } });
+      where.categoryId = cat.id;
+    }
     if (search) where[Op.or] = [{ name: { [Op.iLike]: "%" + search + "%" } }, { nameAr: { [Op.iLike]: "%" + search + "%" } }];
     if (minPrice || maxPrice) {
       where.price = {};
