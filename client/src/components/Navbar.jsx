@@ -29,11 +29,14 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`bg-cream/95 backdrop-blur-md sticky top-0 z-50 transition-shadow duration-300 ${scrolled ? "shadow-md border-b border-line" : "border-b border-line/50"}`}>
+      <div className="bg-primary text-cream text-center px-4 py-2 text-[10px] sm:text-xs tracking-wide">
+        <span className="text-gold">◆</span> {t("features.freeDeliveryDesc")} <span className="text-gold">◆</span>
+      </div>
+      <nav className={`bg-cream/90 backdrop-blur-xl sticky top-0 z-50 transition-all duration-300 ${scrolled ? "shadow-[0_12px_35px_rgba(24,32,29,.08)] border-b border-line" : "border-b border-line/60"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-16 sm:h-20">
+          <div className="flex items-center justify-between h-16 sm:h-[76px]">
             {/* Logo - responsive sizing */}
-            <Logo className="w-28 sm:w-36 md:w-40 shrink-0" />
+            <Logo className="w-24 sm:w-32 md:w-36 shrink-0" />
 
             {/* Search - desktop only */}
             <form onSubmit={handleSearch} className="hidden lg:flex items-center bg-porcelain border border-line rounded-full px-4 py-2 w-72 xl:w-80 focus-within:border-secondary transition">
@@ -150,6 +153,23 @@ export default function Navbar() {
           </div>
         </div>
       )}
+
+      <div className="fixed bottom-3 left-3 right-3 z-40 lg:hidden bg-primary/95 text-cream backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 px-2 py-1.5 pb-[max(.375rem,env(safe-area-inset-bottom))]">
+        <div className="grid grid-cols-4">
+          {[
+            ["/", "home", lang === "ar" ? "الرئيسية" : "Home"],
+            ["/products", "storefront", t("nav.shop")],
+            ["/cart", "shopping_bag", t("nav.cart")],
+            [user ? "/my-orders" : "/login", user ? "receipt_long" : "person", user ? t("nav.myOrders") : t("nav.login")],
+          ].map(([to, icon, label]) => (
+            <Link key={to} to={to} className="relative flex flex-col items-center justify-center gap-0.5 py-1 text-[9px] text-cream/75 hover:text-gold transition">
+              <span className="material-symbols-outlined text-[20px]">{icon}</span>
+              <span className="truncate max-w-full">{label}</span>
+              {to === "/cart" && items.length > 0 && <span className="absolute top-0 right-[25%] bg-gold text-primary text-[8px] font-bold w-4 h-4 rounded-full flex items-center justify-center">{items.length}</span>}
+            </Link>
+          ))}
+        </div>
+      </div>
     </>
   );
 }

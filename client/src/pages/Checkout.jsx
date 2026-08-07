@@ -36,7 +36,7 @@ export default function Checkout() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <h1 className="font-cairo text-3xl font-bold mb-8">{t("checkout.title")}</h1>
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
         <div className="flex-1 space-y-6">
           <div className="bg-white rounded-2xl p-6 shadow-sm">
             <h3 className="font-cairo font-bold text-lg mb-4">{t("checkout.shippingAddress")}</h3>
@@ -66,7 +66,7 @@ export default function Checkout() {
             <textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder={t("checkout.notesPlaceholder")} className="w-full border rounded-xl p-3 text-sm focus:outline-none focus:border-primary" rows={3} />
           </div>
         </div>
-        <div className="w-full lg:w-80">
+        <div className="w-full lg:w-96">
           <div className="bg-white rounded-2xl p-6 shadow-sm sticky top-24">
             <h3 className="font-cairo font-bold text-lg mb-4">{t("checkout.orderSummary")}</h3>
             <div className="space-y-2 text-sm max-h-48 overflow-auto mb-4">

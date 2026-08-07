@@ -27,7 +27,7 @@ export default function AdminProducts() {
   if (user?.role !== "admin") return <div className="max-w-4xl mx-auto px-4 py-16 text-center"><p>{t("admin.adminRequired")}</p></div>;
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-4"><Link to="/admin" className="text-gray-500 hover:text-primary"><span className="material-symbols-outlined">arrow_back</span></Link><h1 className="font-cairo text-3xl font-bold">{t("admin.products")}</h1></div>
         <button onClick={() => setShowForm(!showForm)} className="bg-primary text-white px-4 py-2 rounded-full text-sm hover:bg-accent">{showForm ? t("admin.cancel") : t("admin.addProduct")}</button>
       </div>

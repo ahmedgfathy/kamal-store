@@ -22,12 +22,12 @@ export default function Dashboard() {
   ];
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <h1 className="font-cairo text-3xl font-bold">{t("admin.dashboard")}</h1>
-        <div className="flex gap-3">
-          <Link to="/admin/orders" className="bg-white border px-4 py-2 rounded-full text-sm hover:bg-warm transition">{t("admin.orders")}</Link>
-          <Link to="/admin/products" className="bg-white border px-4 py-2 rounded-full text-sm hover:bg-warm transition">{t("admin.products")}</Link>
-          <Link to="/admin/customers" className="bg-white border px-4 py-2 rounded-full text-sm hover:bg-warm transition">{t("admin.customers")}</Link>
+        <div className="flex gap-2 overflow-x-auto w-full sm:w-auto pb-1">
+          <Link to="/admin/orders" className="shrink-0 bg-white border px-4 py-2 rounded-full text-sm hover:bg-warm transition">{t("admin.orders")}</Link>
+          <Link to="/admin/products" className="shrink-0 bg-white border px-4 py-2 rounded-full text-sm hover:bg-warm transition">{t("admin.products")}</Link>
+          <Link to="/admin/customers" className="shrink-0 bg-white border px-4 py-2 rounded-full text-sm hover:bg-warm transition">{t("admin.customers")}</Link>
         </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">

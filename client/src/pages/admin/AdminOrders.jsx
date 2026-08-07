@@ -21,11 +21,11 @@ export default function AdminOrders() {
   if (user?.role !== "admin") return <div className="max-w-4xl mx-auto px-4 py-16 text-center"><p>{t("admin.adminRequired")}</p></div>;
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-4"><Link to="/admin" className="text-gray-500 hover:text-primary"><span className="material-symbols-outlined">arrow_back</span></Link><h1 className="font-cairo text-3xl font-bold">{t("admin.orders")}</h1></div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 overflow-x-auto w-full sm:w-auto pb-1">
           {["", "pending", "confirmed", "shipped", "delivered", "cancelled"].map(s => (
-            <button key={s} onClick={() => setStatusFilter(s)} className={"px-3 py-1 rounded-full text-xs " + (statusFilter === s ? "bg-primary text-white" : "bg-white border")}>{s || t("admin.all")}</button>
+            <button key={s} onClick={() => setStatusFilter(s)} className={"shrink-0 px-3 py-1 rounded-full text-xs " + (statusFilter === s ? "bg-primary text-white" : "bg-white border")}>{s || t("admin.all")}</button>
           ))}
         </div>
       </div>
@@ -34,9 +34,9 @@ export default function AdminOrders() {
       : (<div className="space-y-4">
         {orders.map(order => (
           <div key={order.id} className="bg-white rounded-2xl p-6 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
               <div><p className="font-semibold">#{order.orderNumber}</p><p className="text-sm text-gray-500">{order.user?.firstName} {order.user?.lastName} - {order.user?.email}</p></div>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className={"text-xs px-3 py-1 rounded-full font-semibold " + statusColor(order.status)}>{order.status.replace("_", " ")}</span>
                 {nextStatus[order.status] && <button onClick={() => updateStatus(order.id, nextStatus[order.status])} className="bg-primary text-white text-xs px-3 py-1 rounded-full hover:bg-accent">{t("admin.markAs")} {nextStatus[order.status].replace("_", " ")}</button>}
               </div>
