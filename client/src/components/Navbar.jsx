@@ -50,7 +50,7 @@ export default function Navbar() {
         </nav>
         <div className="header-actions">
           <button onClick={toggle} className="lang-button">{lang === "ar" ? "EN" : "ع"}</button>
-          <button onClick={() => setSearchOpen(true)} className="icon-button" aria-label="Search"><span className="material-symbols-outlined">search</span></button>
+          <button onClick={() => setSearchOpen(true)} className="icon-button desktop-only" aria-label="Search"><span className="material-symbols-outlined">search</span></button>
           {user ? <Link to="/profile" className="icon-button desktop-only" title={t("profile.title")}><span className="material-symbols-outlined">person</span></Link> : <Link to="/login" className="icon-button desktop-only" aria-label={t("nav.login")}><span className="material-symbols-outlined">person</span></Link>}
           <Link to="/cart" className="icon-button cart-button" aria-label={t("nav.cart")}><span className="material-symbols-outlined">shopping_bag</span>{items.length > 0 && <b>{items.length}</b>}</Link>
         </div>
@@ -60,6 +60,7 @@ export default function Navbar() {
     {searchOpen && <div className="search-overlay"><button onClick={() => setSearchOpen(false)} aria-label="Close">×</button><form onSubmit={submitSearch}><label>{t("nav.searchPlaceholder")}</label><div><input autoFocus value={search} onChange={e => setSearch(e.target.value)} placeholder={t("nav.searchPlaceholder")} /><button type="submit"><span className="material-symbols-outlined">arrow_back</span></button></div></form></div>}
 
     {menuOpen && <div className="mobile-drawer"><button className="mobile-drawer__backdrop" onClick={() => setMenuOpen(false)} /><aside><div className="mobile-drawer__head"><Logo className="site-logo" /><button onClick={() => setMenuOpen(false)}>×</button></div><nav>
+      <button className="mobile-drawer__search" onClick={() => { setSearchOpen(true); setMenuOpen(false); }}><span className="material-symbols-outlined">search</span>{t("nav.searchPlaceholder")}</button>
       <Link onClick={() => setMenuOpen(false)} to="/">{t("nav.home")}</Link>
       <Link onClick={() => setMenuOpen(false)} to="/products">{t("nav.newArrivals")}</Link>
       <Link onClick={() => setMenuOpen(false)} to="/products">{t("nav.bestSellers")}</Link>
