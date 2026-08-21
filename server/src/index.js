@@ -3,7 +3,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const rateLimit = require("express-rate-limit");
-require("dotenv").config();
+if (!process.env.VERCEL) require("dotenv").config();
 
 const sequelize = require("./config/database");
 const authRoutes = require("./routes/auth");
