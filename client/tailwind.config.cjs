@@ -39,7 +39,7 @@ module.exports = {
       fontFamily: {
         cairo: ["var(--font-heading)", "sans-serif"],
         roboto: ["var(--font-body)", "sans-serif"],
-        inter: ["Inter", "sans-serif"],
+        inter: ["Roboto", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
       },
     },
