@@ -122,7 +122,31 @@ exports.getOrderStats = async (req, res) => {
     const totalRevenue = await Order.sum("total", { where: { status: { [Op.notIn]: ["cancelled", "returned"] } } });
     const totalCustomers = await User.count({ where: { role: "customer" } });
     const recentOrders = await Order.findAll({ include: [{ model: User, as: "user", attributes: ["id", "firstName", "lastName", "email"] }, { model: OrderItem, as: "items" }], order: [["createdAt", "DESC"]], limit: 5 });
-    res.json({ stats: { totalOrders, pendingOrders, deliveredOrders, cancelledOrders, totalRevenue: totalRevenue || 0, totalCustomers }, recentOrders });
+    const revenueByDay = await sequelize.query(
+      `SELECT TO_CHAR(d.day, 'MM-DD') AS label, COALESCE(SUM(o.total), 0)::float AS value
+       FROM generate_series(CURRENT_DATE - INTERVAL '13 days', CURRENT_DATE, INTERVAL '1 day') AS d(day)
+       LEFT JOIN orders o ON o.created_at::date = d.day::date AND o.status NOT IN ('cancelled','returned')
+       GROUP BY d.day ORDER BY d.day`, { type: require("sequelize").QueryTypes.SELECT });
+    const ordersByDay = await sequelize.query(
+      `SELECT TO_CHAR(d.day, 'MM-DD') AS label, COUNT(o.id)::int AS value
+       FROM generate_series(CURRENT_DATE - INTERVAL '13 days', CURRENT_DATE, INTERVAL '1 day') AS d(day)
+       LEFT JOIN orders o ON o.created_at::date = d.day::date
+       GROUP BY d.day ORDER BY d.day`, { type: require("sequelize").QueryTypes.SELECT });
+    const statusCounts = await sequelize.query(
+      `SELECT status::text AS label, COUNT(*)::int AS value FROM orders GROUP BY status ORDER BY 2 DESC`,
+      { type: require("sequelize").QueryTypes.SELECT });
+    const topProducts = await sequelize.query(
+      `SELECT oi.product_name AS name, SUM(oi.quantity)::int AS sold, SUM(oi.total)::float AS revenue
+       FROM order_items oi GROUP BY oi.product_name ORDER BY sold DESC LIMIT 5`,
+      { type: require("sequelize").QueryTypes.SELECT });
+    const salesByCategory = await sequelize.query(
+      `SELECT c.name_ar, c.name, COALESCE(SUM(oi.total),0)::float AS revenue
+       FROM categories c
+       LEFT JOIN products p ON p.category_id = c.id
+       LEFT JOIN order_items oi ON oi.product_id = p.id
+       GROUP BY c.id, c.name_ar, c.name ORDER BY revenue DESC`,
+      { type: require("sequelize").QueryTypes.SELECT });
+    res.json({ stats: { totalOrders, pendingOrders, deliveredOrders, cancelledOrders, totalRevenue: totalRevenue || 0, totalCustomers }, recentOrders, revenueByDay, ordersByDay, statusCounts, topProducts, salesByCategory });
   } catch (error) {
     res.status(500).json({ message: "Failed to get stats", error: error.message });
   }

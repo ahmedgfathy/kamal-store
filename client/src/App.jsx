@@ -15,6 +15,7 @@ import AdminOrders from "./pages/admin/AdminOrders";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminCustomers from "./pages/admin/AdminCustomers";
 import AdminUsers from "./pages/admin/AdminUsers";
+import AdminLayout from "./components/AdminLayout";
 import { useAuth } from "./context/AuthContext";
 
 function App() {
@@ -34,11 +35,13 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/my-orders" element={<MyOrders />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/admin" element={<Dashboard />} />
-          <Route path="/admin/orders" element={<AdminOrders />} />
-          <Route path="/admin/products" element={<AdminProducts />} />
-          <Route path="/admin/customers" element={<AdminCustomers />} />
-          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="orders" element={<AdminOrders />} />
+            <Route path="products" element={<AdminProducts />} />
+            <Route path="customers" element={<AdminCustomers />} />
+            <Route path="users" element={<AdminUsers />} />
+          </Route>
         </Routes>
       </main>
       <Footer />
