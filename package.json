@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "mkdir -p node_modules && cp -r server/node_modules/* node_modules/ 2>/dev/null || true",
     "build": "npm --prefix client install && npm --prefix client run build",
     "start:server": "cd server && npm start",
     "dev:server": "cd server && npm run dev",
