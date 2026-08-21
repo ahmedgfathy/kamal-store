@@ -14,6 +14,7 @@ export default function Products() {
   const category = searchParams.get("category") || "";
   const search = searchParams.get("search") || "";
   const sort = searchParams.get("sort") || "";
+  const filter = searchParams.get("filter") || "";
   useEffect(() => { api.get("/products/categories").then(r => setCategories(r.data?.categories || [])); }, []);
   useEffect(() => {
     setLoading(true);
@@ -21,15 +22,18 @@ export default function Products() {
     if (category) params.category = category;
     if (search) params.search = search;
     if (sort) params.sort = sort;
+    if (filter) params.filter = filter;
     api.get("/products", { params }).then(r => { setProducts(r.data?.products || []); setPagination(r.data?.pagination || {}); }).finally(() => setLoading(false));
-  }, [page, category, search, sort]);
+  }, [page, category, search, sort, filter]);
   const setFilter = (key, value) => { const params = new URLSearchParams(searchParams); if (value) { params.set(key, value); if (key !== "page") params.set("page", "1"); } else { params.delete(key); if (key !== "page") params.set("page", "1"); } setSearchParams(params); };
   const catName = (c) => (lang === "ar" ? c.nameAr || c.name : c.name);
   return (
     <div className="max-w-7xl mx-auto px-4 py-6 sm:py-10">
       <div className="mb-6 sm:mb-10">
         <p className="text-secondary text-xs font-bold tracking-[.22em] uppercase mb-2">Kamal Waheed collection</p>
-        <h1 className="font-cairo text-3xl sm:text-5xl font-extrabold">{t("products.title")}</h1>
+        <h1 className="font-cairo text-3xl sm:text-5xl font-extrabold">{filter === "sale" ? t("nav.sale") : filter === "best" ? t("nav.bestSellers") : category ? (() => { const c = categories.find(c => String(c.id) === category); return c ? catName(c) : t("products.title"); })() : t("products.title")}</h1>
+        {filter === "sale" && <p className="text-gray-500 mt-2">{lang === "ar" ? "خصومات حقيقية على منتجات مختارة — لفترة محدودة" : "Real discounts on selected items — for a limited time"}</p>}
+        {filter === "best" && <p className="text-gray-500 mt-2">{lang === "ar" ? "الأكثر تقييماً وطلباً من عملائنا" : "Top-rated and most-loved by our customers"}</p>}
       </div>
       <div className="flex flex-col md:flex-row gap-6 lg:gap-10">
         <aside className="md:w-60 shrink-0">

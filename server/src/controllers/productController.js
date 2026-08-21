@@ -3,9 +3,10 @@ const { Op } = require("sequelize");
 
 exports.getProducts = async (req, res) => {
   try {
-    const { page = 1, limit = 12, category, search, sort, minPrice, maxPrice } = req.query;
+    const { page = 1, limit = 12, category, search, sort, minPrice, maxPrice, filter } = req.query;
     const offset = (page - 1) * limit;
     const where = { isActive: true };
+    if (filter === "sale") where.comparePrice = { [Op.ne]: null };
     if (category) {
       const cat = await Category.findOne({ where: { [Op.or]: [{ id: category }, { slug: category }] }, attributes: ["id"] });
       if (!cat) return res.json({ products: [], pagination: { total: 0, page: parseInt(page), pages: 0 } });
@@ -21,6 +22,7 @@ exports.getProducts = async (req, res) => {
     if (sort === "price_asc") order = [["price", "ASC"]];
     if (sort === "price_desc") order = [["price", "DESC"]];
     if (sort === "name") order = [["name", "ASC"]];
+    if (filter === "best" && !sort) order = [["rating", "DESC"], ["reviewCount", "DESC"]];
     const { count, rows } = await Product.findAndCountAll({
       where, include: [{ model: Category, as: "category", attributes: ["id", "name", "nameAr", "slug"] }],
       order, limit: parseInt(limit), offset: parseInt(offset),

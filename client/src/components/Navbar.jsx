@@ -26,10 +26,10 @@ export default function Navbar() {
   const desktopLinks = [
     { to: "/", label: t("nav.home") },
     { to: "/products", label: t("nav.newArrivals") },
-    { to: "/products", label: t("nav.bestSellers") },
+    { to: "/products?filter=best", label: t("nav.bestSellers") },
     { to: "/products?category=kitchen", label: t("nav.kitchen") },
     { to: "/products?category=home-decor", label: t("nav.decor") },
-    { to: "/products", label: t("nav.sale"), badge: true },
+    { to: "/products?filter=sale", label: t("nav.sale"), badge: true },
   ];
 
   return <>
@@ -63,8 +63,8 @@ export default function Navbar() {
       <button className="mobile-drawer__search" onClick={() => { setSearchOpen(true); setMenuOpen(false); }}><span className="material-symbols-outlined">search</span>{t("nav.searchPlaceholder")}</button>
       <Link onClick={() => setMenuOpen(false)} to="/">{t("nav.home")}</Link>
       <Link onClick={() => setMenuOpen(false)} to="/products">{t("nav.newArrivals")}</Link>
-      <Link onClick={() => setMenuOpen(false)} to="/products">{t("nav.bestSellers")}</Link>
-      <Link onClick={() => setMenuOpen(false)} to="/products">{t("nav.sale")}</Link>
+      <Link onClick={() => setMenuOpen(false)} to="/products?filter=best">{t("nav.bestSellers")}</Link>
+      <Link onClick={() => setMenuOpen(false)} to="/products?filter=sale">{t("nav.sale")}</Link>
       <Link onClick={() => setMenuOpen(false)} to="/products?category=kitchen">{t("nav.kitchen")}</Link>
       <Link onClick={() => setMenuOpen(false)} to="/products?category=home-decor">{t("nav.decor")}</Link>
       {user && <Link onClick={() => setMenuOpen(false)} to="/my-orders">{t("nav.myOrders")}</Link>}
@@ -75,7 +75,7 @@ export default function Navbar() {
     <nav className="mobile-tabbar">
       <Link to="/"><span className="material-symbols-outlined">home</span><small>{t("nav.home")}</small></Link>
       <Link to="/products"><span className="material-symbols-outlined">grid_view</span><small>{t("nav.shop")}</small></Link>
-      <Link to="/products"><span className="material-symbols-outlined">local_offer</span><small>{t("nav.sale")}</small></Link>
+      <Link to="/products?filter=sale"><span className="material-symbols-outlined">local_offer</span><small>{t("nav.sale")}</small></Link>
       <Link to={user ? "/profile" : "/login"}><span className="material-symbols-outlined">person</span><small>{user ? t("nav.myOrders") : t("nav.login")}</small></Link>
     </nav>
   </>;
