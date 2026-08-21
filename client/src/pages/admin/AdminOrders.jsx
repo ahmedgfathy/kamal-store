@@ -10,7 +10,7 @@ export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState("");
-  useEffect(() => { if (user?.role === "admin") fetchOrders(); }, [user, statusFilter]);
+  useEffect(() => { if (["admin", "manager"].includes(user?.role)) fetchOrders(); }, [user, statusFilter]);
   const fetchOrders = () => { setLoading(true); const params = {}; if (statusFilter) params.status = statusFilter; api.get("/orders/admin/all", { params }).then(r => setOrders(r.data?.orders || [])).finally(() => setLoading(false)); };
   const updateStatus = async (orderId, status) => {
     try { await api.put("/orders/" + orderId + "/status", { status }); toast.success("Status updated"); fetchOrders(); }
@@ -18,7 +18,7 @@ export default function AdminOrders() {
   };
   const statusColor = (s) => ({ pending: "bg-yellow-100 text-yellow-700", confirmed: "bg-blue-100 text-blue-700", processing: "bg-blue-100 text-blue-700", shipped: "bg-purple-100 text-purple-700", out_for_delivery: "bg-indigo-100 text-indigo-700", delivered: "bg-green-100 text-green-700", cancelled: "bg-red-100 text-red-700" }[s] || "bg-gray-100");
   const nextStatus = { pending: "confirmed", confirmed: "processing", processing: "shipped", shipped: "out_for_delivery", out_for_delivery: "delivered" };
-  if (user?.role !== "admin") return <div className="max-w-4xl mx-auto px-4 py-16 text-center"><p>{t("admin.adminRequired")}</p></div>;
+  if (!["admin", "manager"].includes(user?.role)) return <div className="max-w-4xl mx-auto px-4 py-16 text-center"><p>{t("admin.adminRequired")}</p></div>;
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">

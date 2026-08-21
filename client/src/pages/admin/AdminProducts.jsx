@@ -12,7 +12,7 @@ export default function AdminProducts() {
   const [showForm, setShowForm] = useState(false);
   const [categories, setCategories] = useState([]);
   const [form, setForm] = useState({ name: "", nameAr: "", slug: "", description: "", price: "", comparePrice: "", stock: "", categoryId: "", sku: "", isFeatured: false });
-  useEffect(() => { if (user?.role === "admin") { api.get("/products?limit=100").then(r => setProducts(r.data?.products || [])); api.get("/products/categories").then(r => setCategories(r.data?.categories || [])).finally(() => setLoading(false)); } }, [user]);
+  useEffect(() => { if (["admin", "editor"].includes(user?.role)) { api.get("/products?limit=100").then(r => setProducts(r.data?.products || [])); api.get("/products/categories").then(r => setCategories(r.data?.categories || [])).finally(() => setLoading(false)); } }, [user]);
   const update = (k, v) => setForm({ ...form, [k]: v });
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ export default function AdminProducts() {
     try { await api.delete("/products/" + id); toast.success("Deleted"); setProducts(products.filter(p => p.id !== id)); }
     catch (e) { toast.error("Failed"); }
   };
-  if (user?.role !== "admin") return <div className="max-w-4xl mx-auto px-4 py-16 text-center"><p>{t("admin.adminRequired")}</p></div>;
+  if (!["admin", "editor"].includes(user?.role)) return <div className="max-w-4xl mx-auto px-4 py-16 text-center"><p>{t("admin.adminRequired")}</p></div>;
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">

@@ -12,7 +12,7 @@ const User = sequelize.define("User", {
   avatar: { type: DataTypes.STRING(500), allowNull: true },
   provider: { type: DataTypes.ENUM("local", "google", "facebook"), defaultValue: "local" },
   providerId: { type: DataTypes.STRING(255), allowNull: true, field: "provider_id" },
-  role: { type: DataTypes.ENUM("customer", "admin"), defaultValue: "customer" },
+  role: { type: DataTypes.ENUM("customer", "editor", "manager", "admin"), defaultValue: "customer" },
   isActive: { type: DataTypes.BOOLEAN, defaultValue: true, field: "is_active" },
 }, {
   tableName: "users",

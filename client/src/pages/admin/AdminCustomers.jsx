@@ -9,8 +9,8 @@ export default function AdminCustomers() {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({});
-  useEffect(() => { if (user?.role === "admin") api.get("/orders/admin/customers").then(r => { setCustomers(r.data?.customers || []); setPagination(r.data?.pagination || {}); }).finally(() => setLoading(false)); }, [user]);
-  if (user?.role !== "admin") return <div className="max-w-4xl mx-auto px-4 py-16 text-center"><p>{t("admin.adminRequired")}</p></div>;
+  useEffect(() => { if (["admin", "manager"].includes(user?.role)) api.get("/orders/admin/customers").then(r => { setCustomers(r.data?.customers || []); setPagination(r.data?.pagination || {}); }).finally(() => setLoading(false)); }, [user]);
+  if (!["admin", "manager"].includes(user?.role)) return <div className="max-w-4xl mx-auto px-4 py-16 text-center"><p>{t("admin.adminRequired")}</p></div>;
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex items-center gap-4 mb-8"><Link to="/admin" className="text-gray-500 hover:text-primary"><span className="material-symbols-outlined">arrow_back</span></Link><h1 className="font-cairo text-3xl font-bold">{t("admin.customers")}</h1></div>

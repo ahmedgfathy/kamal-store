@@ -49,6 +49,7 @@ export default function Navbar() {
           ))}
         </nav>
         <div className="header-actions">
+          {["admin", "editor", "manager"].includes(user?.role) && <Link to="/admin" className="hidden md:inline-flex items-center gap-1 bg-primary text-white px-4 py-2 rounded-full text-xs font-bold hover:bg-secondary transition" title="Control Panel"><span className="material-symbols-outlined text-base">admin_panel_settings</span>{t("nav.admin")}</Link>}
           <button onClick={toggle} className="lang-button">{lang === "ar" ? "EN" : "ع"}</button>
           <button onClick={() => setSearchOpen(true)} className="icon-button desktop-only" aria-label="Search"><span className="material-symbols-outlined">search</span></button>
           {user ? <Link to="/profile" className="icon-button desktop-only" title={t("profile.title")}><span className="material-symbols-outlined">person</span></Link> : <Link to="/login" className="icon-button desktop-only" aria-label={t("nav.login")}><span className="material-symbols-outlined">person</span></Link>}
@@ -69,7 +70,7 @@ export default function Navbar() {
       <Link onClick={() => setMenuOpen(false)} to="/products?category=home-decor">{t("nav.decor")}</Link>
       {user && <Link onClick={() => setMenuOpen(false)} to="/my-orders">{t("nav.myOrders")}</Link>}
       {user && <Link onClick={() => setMenuOpen(false)} to="/profile">{t("profile.title")}</Link>}
-      {user?.role === "admin" && <Link onClick={() => setMenuOpen(false)} to="/admin">{t("nav.admin")}</Link>}
+      {["admin", "editor", "manager"].includes(user?.role) && <Link onClick={() => setMenuOpen(false)} to="/admin">{t("nav.admin")}</Link>}
     </nav><div className="mobile-drawer__account">{user ? <><Link onClick={() => setMenuOpen(false)} to="/profile">{t("profile.title")}</Link><button onClick={() => { logout(); setMenuOpen(false); navigate("/"); }}>{t("nav.logout")}</button></> : <><Link to="/login">{t("nav.login")}</Link><Link className="button-primary" to="/register">{t("nav.register")}</Link></>}</div></aside></div>}
 
     <nav className="mobile-tabbar">

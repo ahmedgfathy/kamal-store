@@ -27,8 +27,17 @@ const adminAuth = async (req, res, next) => {
   }
 };
 
+const requireRole = (...roles) => async (req, res, next) => {
+  await auth(req, res, () => {
+    if (!roles.includes(req.user.role)) return res.status(403).json({ message: "Access denied" });
+    next();
+  });
+};
+
+const staffAuth = requireRole("admin", "editor", "manager");
+
 const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
 };
 
-module.exports = { auth, adminAuth, generateToken };
+module.exports = { auth, adminAuth, staffAuth, requireRole, generateToken };
