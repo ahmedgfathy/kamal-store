@@ -1,17 +1,24 @@
 import { Link } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Logo({ className = "", light = false }) {
+  const { lang } = useLanguage();
   return (
-    <Link to="/" className={`block ${className}`} aria-label="Kamal Waheed home">
-      <img
-        src="/kamal-waheed-logo.svg"
-        alt="كمال وحيد — Kamal Waheed"
-        className={`block w-full h-auto ${light ? "brightness-0 invert" : ""}`}
-      />
+    <Link to="/" className={`text-logo ${className}`} aria-label="Kamal Waheed home">
+      <span className={`text-logo__icon ${light ? "text-white" : "text-secondary"}`}>◆</span>
+      <span className={`text-logo__name ${light ? "text-white" : ""}`}>
+        {lang === "ar" ? "كمال وحيد" : "Kamal Waheed"}
+      </span>
     </Link>
   );
 }
 
 export function LogoFull({ className = "" }) {
-  return <img src="/kamal-waheed-logo.svg" alt="كمال وحيد — Kamal Waheed" className={className} />;
+  const { lang } = useLanguage();
+  return (
+    <span className={`text-logo ${className}`}>
+      <span className="text-logo__icon text-secondary">◆</span>
+      <span className="text-logo__name">{lang === "ar" ? "كمال وحيد" : "Kamal Waheed"}</span>
+    </span>
+  );
 }
