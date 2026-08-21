@@ -8,7 +8,8 @@ exports.getProducts = async (req, res) => {
     const where = { isActive: true };
     if (filter === "sale") where.comparePrice = { [Op.ne]: null };
     if (category) {
-      const cat = await Category.findOne({ where: { [Op.or]: [{ id: category }, { slug: category }] }, attributes: ["id"] });
+      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(category));
+      const cat = await Category.findOne({ where: isUuid ? { [Op.or]: [{ id: category }, { slug: category }] } : { slug: category }, attributes: ["id"] });
       if (!cat) return res.json({ products: [], pagination: { total: 0, page: parseInt(page), pages: 0 } });
       where.categoryId = cat.id;
     }
